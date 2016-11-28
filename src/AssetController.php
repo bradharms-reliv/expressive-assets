@@ -119,7 +119,7 @@ class AssetController
             return $this->defaultHeaders;
         }
 
-        $headerMap = $config->get('headers', []);
+        $headerMap = $config->get('headers', CommonHeaders::get());
 
         if (array_key_exists($fileExtension, $headerMap)) {
             return $headerMap[$fileExtension];

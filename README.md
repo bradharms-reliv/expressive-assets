@@ -20,7 +20,8 @@ Simple asset loading using Zend Expressive middleware
             // Directory where assets are publicly available
             'directory' => __DIR__ . '/../public',
             // File extension to response headers, 
-            // or use \ExpressiveAssets\CommonHeaders::get() for some common headers
+            // If headers value is not supplied 
+            // then \ExpressiveAssets\CommonHeaders will be used
             'headers' => [
                 'css' => [
                     'content-type' => 'text/css'

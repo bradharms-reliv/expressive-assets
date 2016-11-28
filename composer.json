@@ -1,0 +1,33 @@
+{
+  "name": "rcm/expressive-assets",
+  "description": "Simple asset loading",
+  "type": "library",
+  "license": "BSD-3-Clause",
+  "keywords": [
+    "reliv",
+    "module",
+    "zend",
+    "expressive"
+  ],
+  "homepage": "https://github.com/reliv/expressive-assets",
+  "authors": [
+    {
+      "name": "James Jervis",
+      "email": "jjervis@relivinc.com",
+      "homepage": "https://github.com/reliv"
+    }
+  ],
+  "require": {
+    "php": "^5.5 || ^7.0",
+    "zendframework/zend-expressive": "^1.0"
+  },
+  "require-dev": {
+    "phpunit/phpunit": "~5.6",
+    "squizlabs/php_codesniffer": "2.*"
+  },
+  "autoload": {
+    "psr-4": {
+      "ExpressiveAssets\\": "src/"
+    }
+  }
+}

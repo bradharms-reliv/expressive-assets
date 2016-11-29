@@ -13,34 +13,22 @@ namespace ExpressiveAssets;
 class CommonHeaders
 {
     /**
-     * @var array
+     * CommonHeaders constructor.
+     *
+     * @param $config
      */
-    protected static $values
-        = [
-            'css' => ['content-type' => 'text/css'],
-            'doc' => ['content-type' => 'application/msword'],
-            'exe' => ['content-type' => 'application/octet-stream'],
-            'gif' => ['content-type' => 'image/gif'],
-            'html' => ['content-type' => 'text/html'],
-            'jpeg' => ['content-type' => 'image/jpg'],
-            'jpg' => ['content-type' => 'image/jpg'],
-            'js' => ['content-type' => 'application/javascript'],
-            'pdf' => ['content-type' => 'application/pdf'],
-            'php' => ['content-type' => 'text/plain'],
-            'png' => ['content-type' => 'image/png'],
-            'ppt' => ['content-type' => 'application/vnd.ms-powerpoint'],
-            'txt' => ['content-type' => 'text/plain'],
-            'xls' => ['content-type' => 'application/vnd.ms-excel'],
-            'zip' => ['content-type' => 'application/zip'],
-        ];
+    public function __construct($config)
+    {
+        $this->config = $config['expressive-assets']['common_headers'];
+    }
 
     /**
      * get
      *
      * @return array
      */
-    public static function get()
+    public function get()
     {
-        return self::$values;
+        return $this->config;
     }
 }

@@ -35,13 +35,22 @@ class AssetController
     protected $config;
 
     /**
+     * @var CommonHeaders
+     */
+    protected $commonHeaders;
+
+    /**
      * AssetController constructor.
      *
-     * @param array $config
+     * @param array         $config
+     * @param CommonHeaders $commonHeaders
      */
-    public function __construct($config)
-    {
+    public function __construct(
+        $config,
+        CommonHeaders $commonHeaders
+    ) {
         $this->config = $config;
+        $this->commonHeaders = $commonHeaders;
     }
 
     /**
@@ -85,7 +94,7 @@ class AssetController
      */
     protected function getPath(Config $config, $fileName)
     {
-        $directory= $config->get('directory');
+        $directory = $config->get('directory');
 
         if (empty($directory)) {
             return null;
@@ -119,7 +128,7 @@ class AssetController
             return $this->defaultHeaders;
         }
 
-        $headerMap = $config->get('headers', CommonHeaders::get());
+        $headerMap = $config->get('headers', $this->commonHeaders->get());
 
         if (array_key_exists($fileExtension, $headerMap)) {
             return $headerMap[$fileExtension];

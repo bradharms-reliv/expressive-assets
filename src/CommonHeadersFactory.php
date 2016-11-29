@@ -5,30 +5,25 @@ namespace ExpressiveAssets;
 use Interop\Container\ContainerInterface;
 
 /**
- * Class AssetControllerFactory
+ * Class CommonHeadersFactory
  *
  * @author    James Jervis <jjervis@relivinc.com>
  * @copyright 2016 Reliv International
  * @license   License.txt
  * @link      https://github.com/reliv
  */
-class AssetControllerFactory
+class CommonHeadersFactory
 {
     /**
      * __invoke
      *
      * @param ContainerInterface $container
      *
-     * @return AssetController
+     * @return CommonHeaders
      */
     public function __invoke($container)
     {
         $config = $container->get('Config');
-        $commonHeaders = $container->get(CommonHeaders::class);
-
-        return new AssetController(
-            $config,
-            $commonHeaders
-        );
+        return new CommonHeaders($config);
     }
 }

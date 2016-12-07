@@ -190,11 +190,21 @@ class AssetController
 
         $filePath = $this->getPath($config, $fileName);
 
+
+
         if (empty($filePath)) {
-            return $response->withStatus(404);
+            $onNotFound = $config->get('not-found-status', 404);
+
+            return $response->withStatus($onNotFound);
         }
 
         $headers = $this->getHeaders($config, $fileName);
+
+        $alwaysHeaders = $config->get('always-headers');
+
+        if (!empty($alwaysHeaders)) {
+            $headers = array_merge($headers, $alwaysHeaders);
+        }
 
         $body = $response->getBody();
 

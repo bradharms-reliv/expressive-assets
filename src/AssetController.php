@@ -2,9 +2,13 @@
 
 namespace ExpressiveAssets;
 
+use Interop\Http\ServerMiddleware\MiddlewareInterface;
 use Psr\Http\Message\ResponseInterface;
+use Zend\Diactoros\Response;
 use Zend\Expressive\Router\RouteResult;
-use Zend\Stratigility\Http\Request;
+use Psr\Http\Message\ServerRequestInterface;
+use Interop\Http\ServerMiddleware\DelegateInterface;
+use Zend\Stratigility\Next;
 
 /**
  * Class AssetController
@@ -14,7 +18,7 @@ use Zend\Stratigility\Http\Request;
  * @license   License.txt
  * @link      https://github.com/reliv
  */
-class AssetController
+class AssetController implements MiddlewareInterface
 {
     /**
      *
@@ -56,11 +60,11 @@ class AssetController
     /**
      * getConfig
      *
-     * @param Request $request
+     * @param ServerRequestInterface $request
      *
      * @return Config
      */
-    protected function getConfig(Request $request)
+    protected function getConfig(ServerRequestInterface $request)
     {
         /** @var RouteResult $routeResult */
         $routeResult = $request->getAttribute(
@@ -158,11 +162,11 @@ class AssetController
     /**
      * getFileName
      *
-     * @param Request $request
+     * @param ServerRequestInterface $request
      *
      * @return string|null
      */
-    protected function getFileName(Request $request)
+    protected function getFileName(ServerRequestInterface $request)
     {
         return $request->getAttribute(
             self::PARAM_FILE_PATH
@@ -170,15 +174,36 @@ class AssetController
     }
 
     /**
-     * __invoke
+     * New expressive v2 "single pass" interface
      *
-     * @param Request           $request
+     * Process an incoming server request and return a response, optionally delegating
+     * to the next middleware component to create the response.
+     *
+     * @param ServerRequestInterface $request
+     * @param DelegateInterface $delegate
+     *
+     * @return ResponseInterface
+     */
+    public function process(ServerRequestInterface $request, DelegateInterface $delegate){
+        $delegate = $delegate instanceof Next
+            ? $delegate
+            : function ($request) use ($delegate) {
+                return $delegate->process($request);
+            };
+
+        return $this->__invoke($request, new Response(), $delegate);
+    }
+
+    /**
+     * Legacy Expressive v1 "double pass "interface
+     *
+     * @param ServerRequestInterface           $request
      * @param ResponseInterface $response
      * @param callable|null     $next
      *
      * @return ResponseInterface
      */
-    public function __invoke(Request $request, ResponseInterface $response, callable $next = null)
+    public function __invoke(ServerRequestInterface $request, ResponseInterface $response, callable $next = null)
     {
         $fileName = $this->getFileName($request);
 

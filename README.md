@@ -1,6 +1,4 @@
-# ExpressiveAssets #
-
-THIS HAS BEEN DEPRICATED IN FAVOR OF https://github.com/reliv/serve-static. Serve-static is just a PSR middleware instead of dependent on expressive.
+# THIS HAS BEEN DEPRICATED IN FAVOR OF https://github.com/reliv/serve-static.
 
 Simple asset loading using Zend Expressive middleware
 
